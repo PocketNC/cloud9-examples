@@ -21,11 +21,14 @@
 #define USR4 (1<< 7)
 // GPIO5
 #define USR1 (1<< 5)
+
+// GPIO3
+#define P8_11   (1<<11)
 // The define a couple of GPIO pin addresses
 // GPIO6
 #define P9_25   (1<<17)
 // GPIO8
-#define P8_17   (1<18)
+#define P8_17   (1<<18)
 
 // These define which bin in register R30 go to which header pins
 // R30 bits - Output on pru1_1

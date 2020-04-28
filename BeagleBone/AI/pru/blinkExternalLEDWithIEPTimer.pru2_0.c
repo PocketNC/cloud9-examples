@@ -17,7 +17,7 @@
 volatile register unsigned int __R30;
 volatile register unsigned int __R31;
 
-#define WAIT 500000000
+#define WAIT 5000
 
 // http://www.ti.com/lit/ug/spruhz6l/spruhz6l.pdf
 // Section 30.1.11.2.2.3 PRU-ICSS Industrial Ethernet Timer Basic Programming Sequence
@@ -35,6 +35,7 @@ void setup_iep() {
 
   // 3. Enable compare events
   CT_IEP.CMP_CFG_bit.CMP_EN = 1;
+  CT_IEP.CMP_CFG_bit.CMP0_RST_CNT_EN = 1;
 
   // 4. Set increment value
   CT_IEP.GLB_CFG_bit.DEFAULT_INC = 5;
@@ -55,7 +56,7 @@ int read_iep_hit() {
   return CT_IEP.CMP_STS_bit.CMP_HIT & 0x1;
 }
 
-#define P8_11 (1<<11)
+#define P8_12 (1<<10)
 void main() {
   // Points to the GPIO port that is used
   uint32_t *gpio3 = (uint32_t *)GPIO3;
@@ -69,12 +70,12 @@ void main() {
     reset_iep();
     while(!read_iep_hit()) {}
 //    __delay_cycles(WAIT/5);
-    gpio3[GPIO_SETDATAOUT]   = P8_11;  // Turn the USR1 LED on
+    gpio3[GPIO_SETDATAOUT]   = P8_12;  // Turn the USR1 LED on
 
     reset_iep();
     while(!read_iep_hit()) {}
 //    __delay_cycles(WAIT/5);
-    gpio3[GPIO_CLEARDATAOUT] = P8_11;  // Off
+    gpio3[GPIO_CLEARDATAOUT] = P8_12;  // Off
 
   }
   __halt();
